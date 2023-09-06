@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using NativeWebSocket;
 using System;
+using UnityEngine.XR;
 
 public class WebSocketRobotControl : MonoBehaviour
 {
@@ -17,17 +18,23 @@ public class WebSocketRobotControl : MonoBehaviour
     private const string frontPalModelId = "7";
     private const string backPaltModelId = "8";
 
-    public Transform turret;
-    public Transform shoulder;
-    public Transform elbow;
-    public Transform wrist;
-    public Transform clampTurret;
-    public Transform clampBottom;
-    public Transform clampTop;
-    public Transform frontPal;
-    public Transform backPal;
+    public GameObject turret;
+    public GameObject shoulder;
+    public GameObject elbow;
+    public GameObject wrist;
+    public GameObject clampTurret;
+    public GameObject clampBottom;
+    public GameObject clampTop;
+    public GameObject frontPal;
+    public GameObject frontPal2;
+    public GameObject backPal;
+    public GameObject backPal2;
+
+    Color defaultGreenColor;
     async void Start()
     {
+        defaultGreenColor = shoulder.GetComponent<Renderer>().material.color;
+
         websocket = new WebSocket("ws://localhost:2005");
         websocket.OnOpen += () =>
         {
@@ -42,6 +49,7 @@ public class WebSocketRobotControl : MonoBehaviour
         websocket.OnClose += (e) =>
         {
             Debug.Log("Connection closed!");
+
         };
 
         websocket.OnMessage += (bytes) =>
@@ -56,34 +64,130 @@ public class WebSocketRobotControl : MonoBehaviour
             switch (GetId(message))
             {
                 case turretModelId:
-                    turret.localRotation = Quaternion.Euler(0f, 0f, GetValue(message));
+                    turret.transform.localRotation = Quaternion.Euler(0f, 0f, GetValue(message));
                     break;
                 case shoulderModelId:
-                    shoulder.localRotation = Quaternion.Euler(0f, 0f, GetValue(message));
+                    shoulder.transform.localRotation = Quaternion.Euler(0f, 0f, GetValue(message));
                     break;
                 case elbowModelId:
-                    elbow.localRotation = Quaternion.Euler(0f, 0f, GetValue(message));
+                    elbow.transform.localRotation = Quaternion.Euler(0f, 0f, GetValue(message));
                     break;
                 case wristModelId:
-                    wrist.localRotation = Quaternion.Euler(0f, 0f, GetValue(message));
+                    wrist.transform.localRotation = Quaternion.Euler(0f, 0f, GetValue(message));
                     break;
                 case clampModelId:
-                    clampTop.localRotation = Quaternion.Euler(0f, 0f, GetValue(message));
-                    clampBottom.localRotation = Quaternion.Euler(0f, 0f, GetValue(message));
+                    clampTop.transform.localRotation = Quaternion.Euler(0f, 0f, GetValue(message));
+                    clampBottom.transform.localRotation = Quaternion.Euler(0f, 0f, GetValue(message));
                     break;
                 case clampTurretModelId:
-                    clampTurret.localRotation = Quaternion.Euler(0f, 0f, GetValue(message));
+                    clampTurret.transform.localRotation = Quaternion.Euler(0f, 0f, GetValue(message));
                     break;
                 case backPaltModelId:
-                    backPal.localRotation = Quaternion.Euler(0f, 0f, GetValue(message));
+                    backPal.transform.localRotation = Quaternion.Euler(0f, 0f, GetValue(message));
+                    backPal2.transform.localRotation = Quaternion.Euler(0f, 0f, GetValue(message));
+
                     break;
                 case frontPalModelId:
-                    frontPal.localRotation = Quaternion.Euler(0f, 0f, GetValue(message));
+                    frontPal.transform.localRotation = Quaternion.Euler(0f, 0f, GetValue(message));
+                    frontPal2.transform.localRotation = Quaternion.Euler(0f, 0f, GetValue(message));
+
                     break;
 
                 default:
                     break;
             }
+            switch (GetArmSelectId(message))
+            {
+                case turretModelId:
+                    if (GetSelectedValue(message))
+                    {
+                        turret.GetComponent<Renderer>().material.color = Color.white;
+                    }
+                    else
+                    {
+                        turret.GetComponent<Renderer>().material.color = Color.black;
+
+                    }
+                    break;
+                case shoulderModelId:
+                    if (GetSelectedValue(message))
+                    {
+                        shoulder.GetComponent<Renderer>().material.color = Color.white;
+                    }
+                    else
+                    {
+                        shoulder.GetComponent<Renderer>().material.color = defaultGreenColor;
+
+                    }
+                    break;
+                case elbowModelId:
+                    if (GetSelectedValue(message))
+                    {
+                        elbow.GetComponent<Renderer>().material.color = Color.white;
+                    }
+                    else
+                    {
+                        elbow.GetComponent<Renderer>().material.color = defaultGreenColor;
+
+                    }
+                    break;
+                case wristModelId:
+                    if (GetSelectedValue(message))
+                    {
+                        wrist.GetComponent<Renderer>().material.color = Color.white;
+                    }
+                    else
+                    {
+                        wrist.GetComponent<Renderer>().material.color = Color.black;
+
+                    }
+                    break;
+                case clampModelId:
+                    if (GetSelectedValue(message))
+                    {
+                        clampBottom.GetComponent<Renderer>().material.color = Color.white;
+                        clampTop.GetComponent<Renderer>().material.color = Color.white;
+                        clampTurret.GetComponent<Renderer>().material.color = Color.white;
+
+
+                    }
+                    else
+                    {
+                        clampBottom.GetComponent<Renderer>().material.color = Color.black;
+                        clampTop.GetComponent<Renderer>().material.color = Color.black;
+                        clampTurret.GetComponent<Renderer>().material.color = Color.black;
+
+                    }
+                    break;
+ 
+                case backPaltModelId:
+                    if (GetSelectedValue(message))
+                    {
+                        backPal.GetComponent<Renderer>().material.color = Color.white;
+                    }
+                    else
+                    {
+                        backPal.GetComponent<Renderer>().material.color = Color.black;
+
+                    }
+                    break;
+                case frontPalModelId:
+                    if (GetSelectedValue(message))
+                    {
+                        frontPal.GetComponent<Renderer>().material.color = Color.white;
+                    }
+                    else
+                    {
+                        frontPal.GetComponent<Renderer>().material.color = Color.black;
+
+                    }
+                    break;
+
+                default:
+                    break;
+            }
+            Debug.Log(GetSelectedValue(message));
+
         };
 
 
@@ -117,9 +221,26 @@ public class WebSocketRobotControl : MonoBehaviour
         return message.Substring(0,1);
     }
 
+    private string GetArmSelectId(string message)
+    {
+        return message.Substring(3, 1);
+    }
+
     private int GetValue(string message)
     {
         return Convert.ToUInt16(message.Substring(1));
+    }
+
+    private bool GetSelectedValue(string message)
+    {
+        if (message.Substring(4) == "True")
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
     private async void OnApplicationQuit()
