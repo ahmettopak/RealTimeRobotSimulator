@@ -30,12 +30,18 @@ public class WebSocketRobotControl : MonoBehaviour
     public GameObject backPal;
     public GameObject backPal2;
 
-    Color defaultGreenColor;
+    private Color defaultArmColor;
+    private Color selectedColor;
+
+    public Material defaultArmMaterial;
+    public Material selectedArmMaterial;
+
     async void Start()
     {
-        defaultGreenColor = shoulder.GetComponent<Renderer>().material.color;
+        defaultArmColor = defaultArmMaterial.color;
+        selectedColor = selectedArmMaterial.color;   
 
-        websocket = new WebSocket("ws://localhost:2005");
+        websocket = new WebSocket("ws://192.168.3.2:2005");
         websocket.OnOpen += () =>
         {
             Debug.Log("Connection open!");
@@ -96,97 +102,100 @@ public class WebSocketRobotControl : MonoBehaviour
                 default:
                     break;
             }
-            switch (GetArmSelectId(message))
-            {
-                case turretModelId:
-                    if (GetSelectedValue(message))
-                    {
-                        turret.GetComponent<Renderer>().material.color = Color.white;
-                    }
-                    else
-                    {
-                        turret.GetComponent<Renderer>().material.color = Color.black;
 
-                    }
-                    break;
-                case shoulderModelId:
-                    if (GetSelectedValue(message))
-                    {
-                        shoulder.GetComponent<Renderer>().material.color = Color.white;
-                    }
-                    else
-                    {
-                        shoulder.GetComponent<Renderer>().material.color = defaultGreenColor;
+        
+                switch (GetArmSelectId(message))
+                {
+                    case turretModelId:
+                        if (GetSelectedValue(message))
+                        {
+                            turret.GetComponent<Renderer>().material.color = selectedColor;
+                        }
+                        else
+                        {
+                            turret.GetComponent<Renderer>().material.color = Color.black;
 
-                    }
-                    break;
-                case elbowModelId:
-                    if (GetSelectedValue(message))
-                    {
-                        elbow.GetComponent<Renderer>().material.color = Color.white;
-                    }
-                    else
-                    {
-                        elbow.GetComponent<Renderer>().material.color = defaultGreenColor;
+                        }
+                        break;
+                    case shoulderModelId:
+                        if (GetSelectedValue(message))
+                        {
+                            shoulder.GetComponent<Renderer>().material.color = selectedColor;
+                        }
+                        else
+                        {
+                            shoulder.GetComponent<Renderer>().material.color = defaultArmColor;
 
-                    }
-                    break;
-                case wristModelId:
-                    if (GetSelectedValue(message))
-                    {
-                        wrist.GetComponent<Renderer>().material.color = Color.white;
-                    }
-                    else
-                    {
-                        wrist.GetComponent<Renderer>().material.color = Color.black;
+                        }
+                        break;
+                    case elbowModelId:
+                        if (GetSelectedValue(message))
+                        {
+                            elbow.GetComponent<Renderer>().material.color = selectedColor;
+                        }
+                        else
+                        {
+                            elbow.GetComponent<Renderer>().material.color = defaultArmColor;
 
-                    }
-                    break;
-                case clampModelId:
-                    if (GetSelectedValue(message))
-                    {
-                        clampBottom.GetComponent<Renderer>().material.color = Color.white;
-                        clampTop.GetComponent<Renderer>().material.color = Color.white;
-                        clampTurret.GetComponent<Renderer>().material.color = Color.white;
+                        }
+                        break;
+                    case wristModelId:
+                        if (GetSelectedValue(message))
+                        {
+                            wrist.GetComponent<Renderer>().material.color = selectedColor;
+                        }
+                        else
+                        {
+                            wrist.GetComponent<Renderer>().material.color = Color.black;
+
+                        }
+                        break;
+                    case clampModelId:
+                        if (GetSelectedValue(message))
+                        {
+                            clampBottom.GetComponent<Renderer>().material.color = selectedColor;
+                            clampTop.GetComponent<Renderer>().material.color = selectedColor;
+                            clampTurret.GetComponent<Renderer>().material.color = selectedColor;
 
 
-                    }
-                    else
-                    {
-                        clampBottom.GetComponent<Renderer>().material.color = Color.black;
-                        clampTop.GetComponent<Renderer>().material.color = Color.black;
-                        clampTurret.GetComponent<Renderer>().material.color = Color.black;
+                        }
+                        else
+                        {
+                            clampBottom.GetComponent<Renderer>().material.color = Color.black;
+                            clampTop.GetComponent<Renderer>().material.color = Color.black;
+                            clampTurret.GetComponent<Renderer>().material.color = Color.black;
 
-                    }
-                    break;
- 
-                case backPaltModelId:
-                    if (GetSelectedValue(message))
-                    {
-                        backPal.GetComponent<Renderer>().material.color = Color.white;
-                    }
-                    else
-                    {
-                        backPal.GetComponent<Renderer>().material.color = Color.black;
+                        }
+                        break;
 
-                    }
-                    break;
-                case frontPalModelId:
-                    if (GetSelectedValue(message))
-                    {
-                        frontPal.GetComponent<Renderer>().material.color = Color.white;
-                    }
-                    else
-                    {
-                        frontPal.GetComponent<Renderer>().material.color = Color.black;
+                    case backPaltModelId:
+                        if (GetSelectedValue(message))
+                        {
+                            backPal.GetComponent<Renderer>().material.color = selectedColor;
+                        }
+                        else
+                        {
+                            backPal.GetComponent<Renderer>().material.color = Color.black;
 
-                    }
-                    break;
+                        }
+                        break;
+                    case frontPalModelId:
+                        if (GetSelectedValue(message))
+                        {
+                            frontPal.GetComponent<Renderer>().material.color = selectedColor;
+                        }
+                        else
+                        {
+                            frontPal.GetComponent<Renderer>().material.color = Color.black;
 
-                default:
-                    break;
-            }
-            Debug.Log(GetSelectedValue(message));
+                        }
+                        break;
+
+                    default:
+                        break;
+                }
+            
+            //Debug.Log(GetSelectedValue(message));
 
         };
 
@@ -223,17 +232,27 @@ public class WebSocketRobotControl : MonoBehaviour
 
     private string GetArmSelectId(string message)
     {
-        return message.Substring(3, 1);
+
+        if (message.Length > 5)
+        {
+            return message.Substring(3, 1);
+
+        }
+        else
+        {
+            return message;
+        }
+
     }
 
     private int GetValue(string message)
     {
-        return Convert.ToUInt16(message.Substring(1));
+        return Convert.ToInt32(message.Substring(1));
     }
 
     private bool GetSelectedValue(string message)
     {
-        if (message.Substring(4) == "True")
+        if (message.Substring(4) == "True" || message.Substring(4) == "true")
         {
             return true;
         }

@@ -553,7 +553,7 @@ PrefabInstance:
     - target: {fileID: -7635826562936255635, guid: 8314b85ba19d70d4b8c50c71cb29106a, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: b02e90a906f436e439a246b331c572b3, type: 2}
+      objectReference: {fileID: 2100000, guid: f22014f461875e84bb433e3fbf8d57d2, type: 2}
     - target: {fileID: 919132149155446097, guid: 8314b85ba19d70d4b8c50c71cb29106a, type: 3}
       propertyPath: m_Name
       value: Elbow
@@ -586,7 +586,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &518998481
 Transform:
   m_ObjectHideFlags: 0
@@ -600,7 +600,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 684093338}
-  - {fileID: 1438748211}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -611,7 +610,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 518998480}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 448875e23bafc6c42b67ea6201556803, type: 3}
   m_Name: 
@@ -1241,7 +1240,7 @@ PrefabInstance:
     - target: {fileID: -7635826562936255635, guid: 8856266e9b243a146b6bf7683e66bb2c, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: b02e90a906f436e439a246b331c572b3, type: 2}
+      objectReference: {fileID: 2100000, guid: f22014f461875e84bb433e3fbf8d57d2, type: 2}
     - target: {fileID: 919132149155446097, guid: 8856266e9b243a146b6bf7683e66bb2c, type: 3}
       propertyPath: m_Name
       value: Shoulder
@@ -1535,11 +1534,11 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 518998481}
+    m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 72a752f38bbf675428e701d26206f840, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 72a752f38bbf675428e701d26206f840, type: 3}
       propertyPath: m_LocalScale.y
@@ -1604,6 +1603,23 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 72a752f38bbf675428e701d26206f840, type: 3}
   m_PrefabInstance: {fileID: 1438748210}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1438748212
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 551731768}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1fa312c5ed4ffe541bd5e10a4996a317, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minZoom: 0.8
+  maxZoom: 3
+  zoomSenstive: 0.01
+  zoomValue: 1
+  moveSenstive: 0.2
 --- !u!1 &1450825730 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8164078558771037576, guid: 85e2fb2bfe1ba5a48afa6223814c4633, type: 3}
@@ -1894,6 +1910,8 @@ MonoBehaviour:
   frontPal2: {fileID: 147148410}
   backPal: {fileID: 600107714}
   backPal2: {fileID: 799238622}
+  defaultArmMaterial: {fileID: 2100000, guid: f22014f461875e84bb433e3fbf8d57d2, type: 2}
+  selectedArmMaterial: {fileID: 2100000, guid: 863d6caf8c72d7d42b4c3f801685ef2a, type: 2}
 --- !u!1001 &1942563431
 PrefabInstance:
   m_ObjectHideFlags: 0
