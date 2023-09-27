@@ -41,15 +41,17 @@ public class WebSocketRobotControl : MonoBehaviour
         defaultArmColor = defaultArmMaterial.color;
         selectedColor = selectedArmMaterial.color;   
 
-        websocket = new WebSocket("ws://192.168.3.2:2005");
+        websocket = new WebSocket("ws://192.168.1.19:2005");
         websocket.OnOpen += () =>
         {
             Debug.Log("Connection open!");
         };
 
-        websocket.OnError += (e) =>
+        websocket.OnError +=  (e) =>
         {
             Debug.Log("Error! " + e);
+
+
         };
 
         websocket.OnClose += (e) =>

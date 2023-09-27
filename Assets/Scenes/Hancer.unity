@@ -1616,10 +1616,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   minZoom: 0.8
-  maxZoom: 3
+  maxZoom: 2.5
   zoomSenstive: 0.01
   zoomValue: 1
-  moveSenstive: 0.2
+  moveSenstive: 0.4
 --- !u!1 &1450825730 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8164078558771037576, guid: 85e2fb2bfe1ba5a48afa6223814c4633, type: 3}
