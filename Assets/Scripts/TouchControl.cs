@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TouchControl : MonoBehaviour
 {
-    private Vector2 baslangicDokunmaPozisyonu;
+
     public float minZoom = 1f;
     public float maxZoom = 5f;
     public float zoomSenstive = 0.01f;
@@ -16,30 +16,32 @@ public class TouchControl : MonoBehaviour
     {
         if (Input.touchCount == 1) // Tek parmakla dokunma
         {
-            Touch dokunma = Input.GetTouch(0);
+            Touch touchPoint = Input.GetTouch(0);
 
             // Döndürme
-            if (dokunma.phase == TouchPhase.Moved)
+            if (touchPoint.phase == TouchPhase.Moved)
             {
-                float rotX = -dokunma.deltaPosition.y * moveSenstive;
-                float rotY = dokunma.deltaPosition.x * moveSenstive;
+                float rotX = touchPoint.deltaPosition.y * moveSenstive;
+                float rotY = touchPoint.deltaPosition.x * moveSenstive;
+             
                 transform.Rotate(rotX, rotY, 0);
             }
         }
         else if (Input.touchCount == 2) // İki parmakla dokunma
         {
-            Touch dokunma1 = Input.GetTouch(0);
-            Touch dokunma2 = Input.GetTouch(1);
+            Touch touchPoint1 = Input.GetTouch(0);
+            Touch touchPoint2 = Input.GetTouch(1);
 
             // Zoom
-            if (dokunma1.phase == TouchPhase.Moved && dokunma2.phase == TouchPhase.Moved)
+            if (touchPoint1.phase == TouchPhase.Moved && touchPoint2.phase == TouchPhase.Moved)
             {
-                float dokunmaUzakligi = Vector2.Distance(dokunma1.position, dokunma2.position);
-                float oncekiDokunmaUzakligi = Vector2.Distance(dokunma1.position - dokunma1.deltaPosition, dokunma2.position - dokunma2.deltaPosition);
-                float fark = (dokunmaUzakligi - oncekiDokunmaUzakligi) * zoomSenstive;
+                float touchLenght = Vector2.Distance(touchPoint1.position, touchPoint2.position);
+                float lateTouchLenght = Vector2.Distance(touchPoint1.position - touchPoint1.deltaPosition, touchPoint2.position - touchPoint2.deltaPosition);
+                float fark = (touchLenght - lateTouchLenght) * zoomSenstive;
                 zoomValue = Mathf.Clamp(zoomValue - fark, minZoom, maxZoom);
                 transform.localScale = new Vector3(zoomValue, zoomValue, zoomValue);
             }
         }
+   
     }
 }
