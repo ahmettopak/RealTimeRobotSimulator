@@ -5,10 +5,13 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/MainScene.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
   - enabled: 1
     path: Assets/Scenes/Hancer.unity
     guid: e0210ced5b1ec32498293b80af961b35
+  - enabled: 1
+    path: Assets/Scenes/Bogac.unity
+    guid: b69ae931355a67a49915d7f08bfb43cb
   m_configObjects: {}
