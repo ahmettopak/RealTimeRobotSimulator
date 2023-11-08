@@ -39,7 +39,9 @@ public class LearnedMove : MonoBehaviour
     public int selectedIndex = 0;
 
     private GameObject[] movementOrder;
-    private 
+    public int currentIndex = 0;
+
+    private
 
     int dir = 1;
 
@@ -49,7 +51,7 @@ public class LearnedMove : MonoBehaviour
         parkPosition = new SavedPosition(90,90,0,0,0,180,0,0);
         vehiclePosition = new SavedPosition(0, 0, 0, 200, 100, 0, 50, 0);
         firePosition = new SavedPosition(0, 0, 0, 100, 40, 15, 0, 0);
-
+        movementOrder = new GameObject[] {turret ,shoulder,elbow , wrist , clampBottom ,clampTurret};
     }
 
     // Update is called once per frame
@@ -124,6 +126,8 @@ public class LearnedMove : MonoBehaviour
         int diff = (int)(destinationPose - targetObject.transform.localEulerAngles.z);
         if (Math.Abs(diff) < tolerance)
         {
+            currentIndex++;
+
             return true;
         }
 
@@ -153,6 +157,7 @@ public class LearnedMove : MonoBehaviour
 
             }
         }
+
         return false;
 
     }
@@ -160,26 +165,76 @@ public class LearnedMove : MonoBehaviour
     {
 
 
-        if (goToPoseSafety(turret, savedPosition.turretAngle))
+        if (!(currentIndex > movementOrder.Length))
         {
-
-            if (goToPoseSafety(shoulder, savedPosition.shoulderlAngle))
+            if (movementOrder[currentIndex] == turret)
             {
-                if (goToPoseSafety(elbow, savedPosition.elbowAngle))
-                {
-                    if (goToPoseSafety(wrist, savedPosition.wristAngle))
-                    {
-                        if (goToPoseSafety(clampTop, savedPosition.clampAngle) && goToPoseSafety(clampBottom, savedPosition.clampAngle))
-                        {
-                            if (goToPoseSafety(clampTurret, savedPosition.clampTurretAngle))
-                            {
+                goToPoseSafety(turret, savedPosition.turretAngle);
 
-                            }
-                        }
-                    }
-                }
             }
+            else if (movementOrder[currentIndex] == shoulder)
+            {
+                goToPoseSafety(shoulder, savedPosition.shoulderlAngle);
+
+            }
+            else if (movementOrder[currentIndex] == elbow)
+            {
+                goToPoseSafety(elbow, savedPosition.elbowAngle);
+            }
+            else if (movementOrder[currentIndex] == wrist)
+            {
+                goToPoseSafety(wrist, savedPosition.wristAngle);
+            }
+
+            else if (movementOrder[currentIndex] == clampTop)
+            {
+
+                goToPoseSafety(clampTop, savedPosition.clampAngle);
+                goToPoseSafety(clampBottom, savedPosition.clampAngle);
+            }
+            else if (movementOrder[currentIndex] == clampTurret)
+            {
+                goToPoseSafety(clampTurret, savedPosition.clampTurretAngle);
+            }
+            //else if (movementOrder[currentIndex] == backPal)
+            //{
+            //    goToPoseSafety(backPal, savedPosition.backPalAngle);
+            //}
+            //else if (movementOrder[currentIndex] == frontPal)
+            //{
+            //    goToPoseSafety(frontPal, savedPosition.frontPalAngle);
+            //}
         }
+        else
+        {
+            currentIndex = 0;
+            Debug.Log("Pozisyona gidildi");
+        }
+
+
+
+        //if (goToPoseSafety(turret, savedPosition.turretAngle))
+        //{
+
+        //    if (goToPoseSafety(shoulder, savedPosition.shoulderlAngle))
+        //    {
+        //        if (goToPoseSafety(elbow, savedPosition.elbowAngle))
+        //        {
+        //            if (goToPoseSafety(wrist, savedPosition.wristAngle))
+        //            {
+        //                if (goToPoseSafety(clampTop, savedPosition.clampAngle) && goToPoseSafety(clampBottom, savedPosition.clampAngle))
+        //                {
+        //                    if (goToPoseSafety(clampTurret, savedPosition.clampTurretAngle))
+        //                    {
+
+        //                    }
+        //                }
+        //            }
+        //        }
+        //    }
+        //}
+
+
         //;
         //goToPoseSafety(wrist, savedPosition.wristAngle);
         //goToPoseSafety(clampTop, savedPosition.clampAngle);

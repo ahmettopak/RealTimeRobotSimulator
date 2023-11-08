@@ -2720,8 +2720,8 @@ MonoBehaviour:
   frontPal: {fileID: 1450825730}
   backPal: {fileID: 2141505707}
   isLearnedMove: 0
-  frontPalDestinationPositon: 52
-  backPalDestinationPositon: 52
+  frontPalDestinationPositon: 100
+  backPalDestinationPositon: 100
   turretDestinationPositon: 100
   shoulderlDestinationPositon: 100
   elbowDestinationPositon: 14
@@ -2729,8 +2729,9 @@ MonoBehaviour:
   clampDestinationPositon: 25
   clampTurretDestinationPositon: 10
   tolerance: 2
-  speed: 2
+  speed: 0.5
   selectedIndex: 0
+  currentIndex: 0
 --- !u!4 &1845507903
 Transform:
   m_ObjectHideFlags: 0
